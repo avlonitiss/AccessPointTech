@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "522747779115",
+    "firebase_url": "https://accesspointoncloud.firebaseio.com",
+    "project_id": "accesspointoncloud",
+    "storage_bucket": "accesspointoncloud.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522747779115:android:2ae13cee608c349d23f26e",
+        "android_client_info": {
+          "package_name": "org.accesspointoncloud.accesspointtech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522747779115-691nl8cfrg4otuqd2su73hlgs86b20pf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.accesspointoncloud.accesspointtech",
+            "certificate_hash": "0619f721ed45d5c8cd682cc40904cd4cc61a2598"
+          }
+        },
+        {
+          "client_id": "522747779115-6i171nf1npg5bmajf1b4rjgf3sn845qt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpa2OTEOqGEsyAUo_CvIejwGbtiBBJd6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522747779115-6i171nf1npg5bmajf1b4rjgf3sn845qt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
