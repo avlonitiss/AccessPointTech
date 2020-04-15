@@ -22,8 +22,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import org.accesspointoncloud.accesspointtech.R;
 import org.accesspointoncloud.accesspointtech.ui.login.LoginViewModel;
 import org.accesspointoncloud.accesspointtech.ui.login.LoginViewModelFactory;
@@ -31,7 +29,6 @@ import org.accesspointoncloud.accesspointtech.ui.login.LoginViewModelFactory;
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
-    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        mAuth = FirebaseAuth.getInstance();
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
