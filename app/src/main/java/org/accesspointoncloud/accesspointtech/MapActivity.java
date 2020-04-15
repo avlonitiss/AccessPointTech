@@ -1,6 +1,8 @@
 package org.accesspointoncloud.accesspointtech;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -58,6 +60,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        // my_child_toolbar is defined in the layout file
+
+
+        // Get a support ActionBar corresponding to this toolbar
+
+
+        // Enable the Up button
+
     }
 
 
@@ -74,10 +84,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Intent intent = getIntent();
-        // Add a marker in Sydney and move the camera
+        // Add a marker in incident location and move the camera
         LatLng incident1 = new LatLng(38, 23.75);
         mMap.addMarker(new MarkerOptions().position(incident1).title("Υπουργείο Πληροφορικής"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(incident1));
+       //  mMap.moveCamera(CameraUpdateFactory.newLatLng(incident1));
 
      if (intent.getIntExtra("Place Number",0) == 0 ){
 
@@ -86,7 +96,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                centreMapOnLocation(location,"Your Location");
+                centreMapOnLocation(location,"Είσαι εδώ");
             }
 
             @Override
@@ -109,6 +119,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
             Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             centreMapOnLocation(lastKnownLocation,"Your Location");
+            mMap.addMarker(new MarkerOptions().position(incident1).title("Υπουργείο Πληροφορικής"));
         } else {
 
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
