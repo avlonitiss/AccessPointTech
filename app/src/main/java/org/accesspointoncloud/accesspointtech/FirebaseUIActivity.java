@@ -90,6 +90,7 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
 
             findViewById(R.id.signInButton).setVisibility(View.GONE);
             findViewById(R.id.signOutButton).setVisibility(View.VISIBLE);
+            findViewById(R.id.incident_button).setVisibility(View.VISIBLE);
         } else {
             // Signed out
             mStatusView.setText(R.string.signed_out);
@@ -97,6 +98,7 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
 
             findViewById(R.id.signInButton).setVisibility(View.VISIBLE);
             findViewById(R.id.signOutButton).setVisibility(View.GONE);
+            findViewById(R.id.incident_button).setVisibility(View.GONE);
         }
     }
 
