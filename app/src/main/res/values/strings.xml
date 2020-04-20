@@ -14,10 +14,19 @@
 
     <string name="id_fmt">AccessPoint On Cloud ID: %s</string>
     <string name="title_activity_qr">QRActivity</string>
-    <string name="todo">TODO</string>
+
     <string name="generate_qr">Generate-QR</string>
     <string name="enter_a_confirmation_code">Enter a confirmation code</string>
     <string name="read_qr">Read-QR</string>
+    <string name="todo">TODO</string>
+    <string name="find_in_map">Find in map</string>
+    <string name="checkBox">Υπάρχουν εκκρεμότητες</string>
+    <string name="timeButton">καταγραφη ωρας</string>
+    <string name="qr_code">QR-Code</string>
+    <string name="addressText" />
+    <string name="custText" />
+    <string name="custNameText" />
+    <string name="descText" />
 
 
 </resources>
