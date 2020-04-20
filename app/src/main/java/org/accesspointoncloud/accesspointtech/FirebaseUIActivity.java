@@ -39,7 +39,7 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
 
     private TextView mStatusView;
     private TextView mDetailView;
-    private Object documents;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
