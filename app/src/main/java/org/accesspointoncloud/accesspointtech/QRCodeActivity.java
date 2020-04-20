@@ -7,13 +7,16 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.vision.CameraSource;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,10 +34,13 @@ import com.google.zxing.qrcode.QRCodeWriter;
 public class QRCodeActivity extends AppCompatActivity {
 
     private EditText editText;
+    private TextView confCodeText;
     private ImageView imageView;
     private Button gButton;
     private Button rButton;
     private FirebaseAuth mAuth;
+    private CameraSource cameraSource;
+    private SurfaceView surfaceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,8 @@ public class QRCodeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         editText = findViewById(R.id.confCodeEditText);
         imageView = findViewById(R.id.imageQRView);
+        surfaceView = (SurfaceView) findViewById(R.id.camerapreview);
+        confCodeText = (TextView) findViewById(R.id.qrConfCodeText);
 
     }
 
