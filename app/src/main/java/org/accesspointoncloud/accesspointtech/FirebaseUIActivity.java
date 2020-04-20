@@ -3,15 +3,23 @@ package org.accesspointoncloud.accesspointtech;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 //import com.google.firebase.quickstart.auth.BuildConfig;
 //import com.google.firebase.quickstart.auth.R;
 
@@ -31,6 +39,7 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
 
     private TextView mStatusView;
     private TextView mDetailView;
+    private Object documents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +96,30 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
             // Signed in
             mStatusView.setText(getString(R.string.firebaseui_status_fmt, user.getEmail()));
             mDetailView.setText(getString(R.string.id_fmt, user.getUid()));
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            Query myIncident = db.collection("incidentscollection").whereEqualTo("incidentTechEmailField", user.getEmail());
+          myIncident.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+              private static final String TAG ="tech incident docs" ;
+
+              @Override
+              public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                  if(task.isSuccessful()){
+                      for (QueryDocumentSnapshot document : task.getResult()) {
+                          Log.d(TAG, document.getId());
+                          document.getData();
+                          if (document.getData().isEmpty()) {
+                              findViewById(R.id.incident_button).setVisibility(View.GONE);
+                          } else {
+                              findViewById(R.id.incident_button).setVisibility(View.VISIBLE);
+                          }
+                      }
+                  }
+              }
+          });
 
             findViewById(R.id.signInButton).setVisibility(View.GONE);
             findViewById(R.id.signOutButton).setVisibility(View.VISIBLE);
-            findViewById(R.id.incident_button).setVisibility(View.VISIBLE);
+
         } else {
             // Signed out
             mStatusView.setText(R.string.signed_out);
