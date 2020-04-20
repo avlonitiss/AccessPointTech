@@ -19,16 +19,17 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 
 public class MainActivity extends AppCompatActivity {
-   FirebaseFirestore db = FirebaseFirestore.getInstance();
- //   private FirebaseAuth mAuth;
-    FirebaseUser user;
+
+    private FirebaseAuth mAuth;
     private TextView incidentCustCompanyView;
     private TextView incidentCustNameView;
     private TextView incidentDescriptionField;
     private TextView incidentCustAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    //    mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         incidentCustAddress = findViewById(R.id.incidentCustAdText);
 
        // findViewById(R.id.mapButton).setOnClickListener((View.OnClickListener) this);
-        //findViewById(R.id.qrButton).setOnClickListener((View.OnClickListener) this);
+      //  findViewById(R.id.qrButton).setOnClickListener((View.OnClickListener) this);
     }
 
 
