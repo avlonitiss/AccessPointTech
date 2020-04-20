@@ -14,6 +14,10 @@
 
     <string name="id_fmt">AccessPoint On Cloud ID: %s</string>
     <string name="title_activity_qr">QRActivity</string>
+    <string name="todo">TODO</string>
+    <string name="generate_qr">Generate-QR</string>
+    <string name="enter_a_confirmation_code">Enter a confirmation code</string>
+    <string name="read_qr">Read-QR</string>
 
 
 </resources>

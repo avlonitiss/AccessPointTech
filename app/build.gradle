@@ -47,6 +47,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
+    implementation 'com.google.zxing:core:3.2.1'
     // implementation name:'maps-sdk-3.0.0-beta', ext:'aar'
     //  implementation name:'places-maps-sdk-3.0.0-beta', ext:'aar'
 
