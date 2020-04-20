@@ -2,6 +2,7 @@
     <string name="app_name">AccessPointTech</string>
     <string name="title_activity_map">AccessPointTech Map</string>
     <string name="title_activity_main">AccessPointTech Mission</string>
+    <string name="title_activity_QR">AccessPointTech QR</string>
 
     <string name="sign_in">Sign In</string>
     <string name="sign_out">Sign Out</string>
@@ -12,5 +13,7 @@
     <string name="firebaseui_title_text">Check your next mission</string>
 
     <string name="id_fmt">AccessPoint On Cloud ID: %s</string>
+    <string name="title_activity_qr">QRActivity</string>
+
 
 </resources>

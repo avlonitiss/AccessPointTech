@@ -3,9 +3,11 @@ package org.accesspointoncloud.accesspointtech;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView incidentCustNameView;
     private TextView incidentDescriptionField;
     private TextView incidentCustAddress;
+    private Button mButton;
+    private Button qButton;
+    private Button tButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
@@ -32,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mButton = findViewById(R.id.mapButton);
+        qButton = findViewById(R.id.qrButton);
+        tButton = findViewById(R.id.timeButton);
 
         Query myIncident = db.collection("incidentscollection").whereEqualTo("incidentTechEmailField", user.getEmail());
 
@@ -41,10 +50,20 @@ public class MainActivity extends AppCompatActivity {
         incidentDescriptionField = findViewById(R.id.incidentDescriptionText);
         incidentCustAddress = findViewById(R.id.incidentCustAdText);
 
-       // findViewById(R.id.mapButton).setOnClickListener((View.OnClickListener) this);
-      //  findViewById(R.id.qrButton).setOnClickListener((View.OnClickListener) this);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMapActivity();
+            }
+        });
+
+        //  findViewById(R.id.qrButton).setOnClickListener((View.OnClickListener) this);
     }
 
+    public void openMapActivity(){
+        Intent intent = new Intent(this, MapActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public void onStart() {

@@ -28,58 +28,75 @@
 
         android:layout_height="43dp"
         android:text=" "
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/incidentDescriptionText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.21" />
+        app:layout_constraintVertical_bias="0.801" />
 
     <TextView
         android:id="@+id/incidentDescriptionText"
         android:layout_width="281dp"
         android:layout_height="117dp"
+        android:layout_marginBottom="28dp"
         android:text="  "
-        tools:layout_editor_absoluteX="69dp"
-        tools:layout_editor_absoluteY="187dp" />
+        app:layout_constraintBottom_toTopOf="@+id/incidentCustAdText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/incidentCustAdText"
         android:layout_width="210dp"
         android:layout_height="34dp"
+        android:layout_marginBottom="244dp"
         android:text="  "
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="331dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/mapButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="64dp"
         android:text="Find in map"
-        tools:layout_editor_absoluteX="265dp"
-        tools:layout_editor_absoluteY="389dp" />
+        app:layout_constraintBottom_toTopOf="@+id/timeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/finishCheckBox" />
 
     <CheckBox
         android:id="@+id/finishCheckBox"
         android:layout_width="153dp"
         android:layout_height="49dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginBottom="60dp"
         android:text="Υπάρχουν εκκρεμότητες"
-        tools:layout_editor_absoluteX="61dp"
-        tools:layout_editor_absoluteY="388dp" />
+        app:layout_constraintBottom_toTopOf="@+id/qrButton"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/qrButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginBottom="52dp"
         android:text="QR-SCAN"
-        tools:layout_editor_absoluteX="83dp"
-        tools:layout_editor_absoluteY="480dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/timeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="52dp"
         android:text="καταγραφη ωρας"
-        tools:layout_editor_absoluteX="247dp"
-        tools:layout_editor_absoluteY="480dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/qrButton"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
