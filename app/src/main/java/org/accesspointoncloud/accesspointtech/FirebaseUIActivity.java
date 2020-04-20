@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Collections;
 
+import io.opencensus.common.ServerStatsFieldEnums;
+
 /**
  * Demonstrate authentication using the FirebaseUI-Android library. This activity demonstrates
  * using FirebaseUI for basic email/password sign in.
@@ -36,16 +39,17 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
     private static final int RC_SIGN_IN = 9001;
 
     private FirebaseAuth mAuth;
-
+    private Button button;
     private TextView mStatusView;
     private TextView mDetailView;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+
+           @Override
+          protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_ui);
-
+        button = findViewById(R.id.incident_button);
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
@@ -54,7 +58,19 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
 
         findViewById(R.id.signInButton).setOnClickListener(this);
         findViewById(R.id.signOutButton).setOnClickListener(this);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMainActivity();
+            }
+        });
     }
+
+    public void openMainActivity(){
+Intent intent =new Intent(this, MainActivity.class);
+startActivity(intent);
+
+    };
 
     @Override
     protected void onStart() {

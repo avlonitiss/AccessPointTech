@@ -47,15 +47,39 @@
         android:layout_width="210dp"
         android:layout_height="34dp"
         android:text="  "
-        tools:layout_editor_absoluteX="37dp"
-        tools:layout_editor_absoluteY="328dp" />
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="331dp" />
 
     <Button
         android:id="@+id/mapButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Find in map"
-        tools:layout_editor_absoluteX="276dp"
-        tools:layout_editor_absoluteY="328dp" />
+        tools:layout_editor_absoluteX="265dp"
+        tools:layout_editor_absoluteY="389dp" />
+
+    <CheckBox
+        android:id="@+id/finishCheckBox"
+        android:layout_width="153dp"
+        android:layout_height="49dp"
+        android:text="Υπάρχουν εκκρεμότητες"
+        tools:layout_editor_absoluteX="61dp"
+        tools:layout_editor_absoluteY="388dp" />
+
+    <Button
+        android:id="@+id/qrButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="QR-SCAN"
+        tools:layout_editor_absoluteX="83dp"
+        tools:layout_editor_absoluteY="480dp" />
+
+    <Button
+        android:id="@+id/timeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="καταγραφη ωρας"
+        tools:layout_editor_absoluteX="247dp"
+        tools:layout_editor_absoluteY="480dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

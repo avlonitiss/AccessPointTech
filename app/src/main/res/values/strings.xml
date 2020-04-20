@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AccessPointTech</string>
     <string name="title_activity_map">AccessPointTech Map</string>
+    <string name="title_activity_main">AccessPointTech Mission</string>
 
     <string name="sign_in">Sign In</string>
     <string name="sign_out">Sign Out</string>
