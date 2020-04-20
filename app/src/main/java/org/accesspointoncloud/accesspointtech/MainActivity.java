@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -33,22 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mButton = findViewById(R.id.mapButton);
         qButton = findViewById(R.id.qrButton);
         tButton = findViewById(R.id.timeButton);
+        refineDbResults();
 
-        Query myIncident = db.collection("incidentscollection").whereEqualTo("incidentTechEmailField", user.getEmail());
-
-
-        incidentCustCompanyView = findViewById(R.id.incidentCustCompanyText);
-        incidentCustNameView = findViewById(R.id.incidentCustNameText);
-        incidentDescriptionField = findViewById(R.id.incidentDescriptionText);
-        incidentCustAddress = findViewById(R.id.incidentCustAdText);
 
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,11 +50,59 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        qButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openQRCodeActivity();
+            }
+        });
         //  findViewById(R.id.qrButton).setOnClickListener((View.OnClickListener) this);
+    }
+
+    public void refineDbResults() {
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        Query myIncident = db.collection("incidentscollection").whereEqualTo("incidentTechEmailField", user.getEmail());
+        myIncident.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            private static final String TAG ="tech incident docs" ;
+
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId());
+                        String custCompany = document.get("incidentCustCompany").toString();
+                        incidentCustCompanyView = findViewById(R.id.incidentCustCompanyText);
+                        incidentCustCompanyView.setText(custCompany);
+
+                        String custName = document.get("incidentCustNameField").toString();
+                        incidentCustNameView = findViewById(R.id.incidentCustNameText);
+                        incidentCustNameView.setText(custName);
+
+                        String incidentDes = document.get("incidentDescriptionField").toString();
+                        incidentDescriptionField = findViewById(R.id.incidentDescriptionText);
+                        incidentDescriptionField.setText(incidentDes);
+
+                        String incidentAdd = document.get("incidentCustAdField").toString();
+                        incidentCustAddress = findViewById(R.id.incidentCustAdText);
+                        incidentCustAddress.setText(incidentAdd);
+
+
+                    }
+                }
+            }
+        });
+
     }
 
     public void openMapActivity(){
         Intent intent = new Intent(this, MapActivity.class);
+        startActivity(intent);
+    }
+
+    public void openQRCodeActivity(){
+        Intent intent = new Intent(this, QRCodeActivity.class);
         startActivity(intent);
     }
 
