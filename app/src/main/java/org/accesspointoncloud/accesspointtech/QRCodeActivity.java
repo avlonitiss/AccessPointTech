@@ -59,6 +59,7 @@ public class QRCodeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     BarcodeDetector barcodeDetector;
     public static final int CAMERA_FACING_BACK=1;
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
 
 
     @Override
@@ -78,12 +79,18 @@ public class QRCodeActivity extends AppCompatActivity {
                 .setRequestedPreviewSize(640,480).build();
         fetchDbData();
         int cameraFacingBack = cameraSource.CAMERA_FACING_BACK;
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+            recreate();}
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
+
                 if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
-                    return;                }
+                   return;
+
+                }
                 try { cameraSource.start(holder);} catch (IOException e) {
                     e.printStackTrace();    }        }
             @Override
