@@ -41,7 +41,10 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
     private FirebaseAuth mAuth;
     private Button button;
     private TextView mStatusView;
+    private TextView incidentMessage;
+
     private TextView mDetailView;
+    private TextView noMission;
 
 
 
@@ -50,9 +53,11 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_ui);
         button = findViewById(R.id.incident_button);
+
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
+        incidentMessage = findViewById(R.id.titleText);
         mStatusView = findViewById(R.id.status);
         mDetailView = findViewById(R.id.detail);
 
@@ -75,6 +80,7 @@ startActivity(intent);
     @Override
     protected void onStart() {
         super.onStart();
+
         updateUI(mAuth.getCurrentUser());
     }
 
@@ -125,8 +131,11 @@ startActivity(intent);
                           document.getData();
                           if (document.getData().isEmpty()) {
                               findViewById(R.id.incident_button).setVisibility(View.GONE);
+                              incidentMessage.setText("Yet NO missions for you");
+
                           } else {
                               findViewById(R.id.incident_button).setVisibility(View.VISIBLE);
+
                           }
                       }
                   }
@@ -144,6 +153,7 @@ startActivity(intent);
             findViewById(R.id.signInButton).setVisibility(View.VISIBLE);
             findViewById(R.id.signOutButton).setVisibility(View.GONE);
             findViewById(R.id.incident_button).setVisibility(View.GONE);
+
         }
     }
 

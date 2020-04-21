@@ -28,6 +28,8 @@
     <string name="custNameText" />
     <string name="descText" />
     <string name="checkDb">Check Db</string>
+    <string name="yet_no_missions_for_you">Yet, NO missions for you</string>
+    <string name="go_to_your_mission">Go to your mission</string>
 
 
 </resources>
