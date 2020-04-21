@@ -27,6 +27,7 @@
     <string name="custText" />
     <string name="custNameText" />
     <string name="descText" />
+    <string name="checkDb">Check Db</string>
 
 
 </resources>

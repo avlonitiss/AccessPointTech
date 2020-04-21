@@ -7,22 +7,6 @@
     android:autofillHints="@string/fui_enter_confirmation_code"
     tools:context=".QRCodeActivity">
 
-    <SurfaceView
-        android:id="@+id/camerapreview"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-
-        android:layout_marginStart="71dp"
-        android:layout_marginTop="287dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.46"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <Button
         android:id="@+id/generateButton"
         android:layout_width="wrap_content"
@@ -54,27 +38,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/readButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/read_qr"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.398" />
-
     <View
         android:id="@+id/divider2"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="3dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35" />
+        app:layout_constraintVertical_bias="0.359" />
 
     <ImageView
         android:id="@+id/imageQRView"
@@ -94,11 +67,58 @@
 
     <TextView
         android:id="@+id/qrConfCodeText"
-        android:layout_width="241dp"
-        android:layout_height="29dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="170dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="92dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.552"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.344"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/checkButton"
+        android:layout_width="106dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="#FA0606"
+        android:onClick="checkDbButton"
+        android:text="@string/checkDb"
+        android:textColor="#E6DCDC"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.976"
+        app:layout_constraintStart_toEndOf="@+id/qrConfCodeText"
+        app:layout_constraintTop_toBottomOf="@+id/camerapreview"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <SurfaceView
+        android:id="@+id/camerapreview"
+        android:layout_width="244dp"
+        android:layout_height="193dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/dbCodeText"
+        android:layout_width="168dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="145dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginBottom="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/checkButton"
+        app:layout_constraintHorizontal_bias="0.568"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qrConfCodeText"
+        app:layout_constraintVertical_bias="0.173" />
 </androidx.constraintlayout.widget.ConstraintLayout>
