@@ -130,26 +130,16 @@ startActivity(intent);
                 try {
                     Response response = client.newCall(request).execute();
                     String x = response.body().string();
-                    String y = response.headers().names().toString();
-                    String connection = response.header("Connection").toString();
-                    String server = response.header("Server").toString();
                     Toast.makeText(this, "Your Public IP is "+x, Toast.LENGTH_SHORT).show();
-
-                    Log.v("response", response.toString());
                     Log.v("response-body",x);
-                    Log.v("response-header-names",y);
-                    Log.v("response-header-Server",server);
-                    Log.v("response-header-Connection",connection);
-
-                } catch (IOException e) {
+            } catch (IOException e) {
                     e.printStackTrace();
                     Log.i(TAG, e.toString());
                 }
 
                 updateUI(mAuth.getCurrentUser());
 
-
-            } else {
+          } else {
                 // Sign in failed
                 Toast.makeText(this, "Sign In Failed", Toast.LENGTH_SHORT).show();
                 updateUI(null);
