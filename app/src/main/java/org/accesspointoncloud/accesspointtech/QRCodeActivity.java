@@ -48,6 +48,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class QRCodeActivity extends AppCompatActivity {
 
     SurfaceView surfaceView;
@@ -124,7 +129,7 @@ public class QRCodeActivity extends AppCompatActivity {
         });
 
     }
-
+    //QR-Code Generator
     public void QRCodeButton(View view) {
 
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
@@ -163,6 +168,30 @@ public class QRCodeActivity extends AppCompatActivity {
                         document.getReference().update("incidentConfCodeField", confCode);
                         document.getReference().update("incidentCustStartTimeField", Timestamp.now());
 
+                        OkHttpClient client = new OkHttpClient();
+
+//add parameters
+                        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://checkip.amazonaws.com/").newBuilder();
+                        //  urlBuilder.addQueryParameter("query", "stack-overflow");
+
+
+                        String url = urlBuilder.build().toString();
+
+//build the request
+                        Request request = new Request.Builder().url(url).build();
+
+
+
+//execute
+                        try {
+                            Response response = client.newCall(request).execute();
+                            String x = response.body().string();
+                            Toast.makeText(QRCodeActivity.this, "Your IP address has been recorded  "+x, Toast.LENGTH_SHORT).show();
+                            document.getReference().update("incidentPublicIPField", x);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Log.i(TAG, e.toString());
+                        }
 
 
 

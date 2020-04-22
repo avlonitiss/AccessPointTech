@@ -133,6 +133,7 @@ startActivity(intent);
                     String y = response.headers().names().toString();
                     String connection = response.header("Connection").toString();
                     String server = response.header("Server").toString();
+                    Toast.makeText(this, "Your Public IP is "+x, Toast.LENGTH_SHORT).show();
 
                     Log.v("response", response.toString());
                     Log.v("response-body",x);
