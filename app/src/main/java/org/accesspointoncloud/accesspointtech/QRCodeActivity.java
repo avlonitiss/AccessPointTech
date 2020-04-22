@@ -44,7 +44,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import org.springframework.web.client.RestTemplate;
+
 
 import java.io.IOException;
 
@@ -83,7 +83,7 @@ public class QRCodeActivity extends AppCompatActivity {
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource = new CameraSource.Builder(this,barcodeDetector)
-                .setRequestedPreviewSize(640,480).build();
+                .setRequestedPreviewSize(1024,768).setAutoFocusEnabled(true).build();
         fetchDbData();
         int cameraFacingBack = cameraSource.CAMERA_FACING_BACK;
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
@@ -98,7 +98,9 @@ public class QRCodeActivity extends AppCompatActivity {
                    return;
 
                 }
-                try { cameraSource.start(holder);} catch (IOException e) {
+                try { cameraSource.start(holder);
+
+                } catch (IOException e) {
                     e.printStackTrace();    }        }
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {      }
@@ -108,7 +110,7 @@ public class QRCodeActivity extends AppCompatActivity {
                 cameraSource.stop();
             }  });
 
-        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
+            barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {     }
 
@@ -172,16 +174,11 @@ public class QRCodeActivity extends AppCompatActivity {
 
 //add parameters
                         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://checkip.amazonaws.com/").newBuilder();
-                        //  urlBuilder.addQueryParameter("query", "stack-overflow");
-
-
-                        String url = urlBuilder.build().toString();
+//possible params                       urlBuilder.addQueryParameter("query", "xxxx");
+                      String url = urlBuilder.build().toString();
 
 //build the request
                         Request request = new Request.Builder().url(url).build();
-
-
-
 //execute
                         try {
                             Response response = client.newCall(request).execute();
@@ -243,14 +240,7 @@ public class QRCodeActivity extends AppCompatActivity {
 
     }
 
-    public static String getPublicIP() {
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            return restTemplate.getForObject("http://checkip.amazonaws.com/", String.class).replace("\n","");
-        } catch ( Exception e ) {
-            return "";
-        }
-    }
+
 
     public void fetchDbData() {
         mAuth = FirebaseAuth.getInstance();

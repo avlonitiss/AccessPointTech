@@ -113,19 +113,11 @@ startActivity(intent);
                 // Sign in succeeded
 //get an instance of the client
                 OkHttpClient client = new OkHttpClient();
-
 //add parameters
                 HttpUrl.Builder urlBuilder = HttpUrl.parse("https://checkip.amazonaws.com/").newBuilder();
-                //  urlBuilder.addQueryParameter("query", "stack-overflow");
-
-
                 String url = urlBuilder.build().toString();
-
 //build the request
                 Request request = new Request.Builder().url(url).build();
-
-
-
 //execute
                 try {
                     Response response = client.newCall(request).execute();
