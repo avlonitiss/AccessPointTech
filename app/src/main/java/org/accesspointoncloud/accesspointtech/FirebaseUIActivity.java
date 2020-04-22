@@ -4,6 +4,7 @@ package org.accesspointoncloud.accesspointtech;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 
+import okhttp3.Connection;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import static com.google.android.gms.vision.L.e;
 
 /**
@@ -43,7 +50,7 @@ import static com.google.android.gms.vision.L.e;
 public class FirebaseUIActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RC_SIGN_IN = 9001;
-    private static final String TAG = "logError";
+    private static final String TAG = "logErrorTag";
     private FirebaseAuth mAuth;
     private Button button;
     private TextView mStatusView;
@@ -52,12 +59,15 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
 
     private TextView mDetailView;
     private TextView noMission;
+    private Request ipRequest;
 
 
 
     @Override
           protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         setContentView(R.layout.activity_firebase_ui);
         button = findViewById(R.id.incident_button);
@@ -101,7 +111,39 @@ startActivity(intent);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 // Sign in succeeded
+//get an instance of the client
+                OkHttpClient client = new OkHttpClient();
 
+//add parameters
+                HttpUrl.Builder urlBuilder = HttpUrl.parse("https://checkip.amazonaws.com/").newBuilder();
+                //  urlBuilder.addQueryParameter("query", "stack-overflow");
+
+
+                String url = urlBuilder.build().toString();
+
+//build the request
+                Request request = new Request.Builder().url(url).build();
+
+
+
+//execute
+                try {
+                    Response response = client.newCall(request).execute();
+                    String x = response.body().string();
+                    String y = response.headers().names().toString();
+                    String connection = response.header("Connection").toString();
+                    String server = response.header("Server").toString();
+
+                    Log.v("response", response.toString());
+                    Log.v("response-body",x);
+                    Log.v("response-header-names",y);
+                    Log.v("response-header-Server",server);
+                    Log.v("response-header-Connection",connection);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.i(TAG, e.toString());
+                }
 
                 updateUI(mAuth.getCurrentUser());
 
@@ -128,45 +170,14 @@ startActivity(intent);
     }
 
 
-    private class FindIp extends AsyncTask <URL,Void, Void> {
 
-
-        String ip = null;
-
-
-        @Override
-        protected Void doInBackground(URL... urls) {
-
-            try {
-                URL whatismyip= new URL ("https://checkip.amazonaws.com");
-                BufferedReader in = new BufferedReader(new InputStreamReader(
-                        whatismyip.openStream()));
-
-                String ip = in.readLine();
-
-                Log.i(TAG, "EXT IP: " + ip);
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        public String getIp() {
-            return this.ip;
-        }
-    }
 
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
 
-            new FindIp().execute();
-        //    String x = new FindIp().getIp();
 
-          // Toast.makeText(this, x, Toast.LENGTH_LONG);
-            Log.i("public ip", "tesst");
+
 
 
             mStatusView.setText(getString(R.string.firebaseui_status_fmt, user.getEmail()));
