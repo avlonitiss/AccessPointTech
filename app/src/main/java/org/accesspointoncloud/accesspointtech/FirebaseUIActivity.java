@@ -131,7 +131,7 @@ startActivity(intent);
     private class FindIp extends AsyncTask <URL,Void, Void> {
 
 
-                String ip;
+        String ip = null;
 
 
         @Override
@@ -142,7 +142,7 @@ startActivity(intent);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         whatismyip.openStream()));
 
-                ip = in.readLine();
+                String ip = in.readLine();
 
                 Log.i(TAG, "EXT IP: " + ip);
 
@@ -152,16 +152,21 @@ startActivity(intent);
             }
             return null;
         }
-                }
+
+        public String getIp() {
+            return this.ip;
+        }
+    }
 
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
 
             new FindIp().execute();
+        //    String x = new FindIp().getIp();
 
           // Toast.makeText(this, x, Toast.LENGTH_LONG);
-       //     Log.i("public ip", x);
+            Log.i("public ip", "tesst");
 
 
             mStatusView.setText(getString(R.string.firebaseui_status_fmt, user.getEmail()));
