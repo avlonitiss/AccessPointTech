@@ -44,6 +44,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import org.springframework.web.client.RestTemplate;
+
 import java.io.IOException;
 
 public class QRCodeActivity extends AppCompatActivity {
@@ -210,6 +212,15 @@ public class QRCodeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public static String getPublicIP() {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            return restTemplate.getForObject("http://checkip.amazonaws.com/", String.class).replace("\n","");
+        } catch ( Exception e ) {
+            return "";
+        }
     }
 
     public void fetchDbData() {

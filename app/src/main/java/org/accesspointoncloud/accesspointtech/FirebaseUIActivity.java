@@ -2,6 +2,7 @@ package org.accesspointoncloud.accesspointtech;
 
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,9 +25,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 //import com.google.firebase.quickstart.auth.BuildConfig;
 //import com.google.firebase.quickstart.auth.R;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collections;
 
-import io.opencensus.common.ServerStatsFieldEnums;
+import static com.google.android.gms.vision.L.e;
 
 /**
  * Demonstrate authentication using the FirebaseUI-Android library. This activity demonstrates
@@ -37,29 +43,32 @@ import io.opencensus.common.ServerStatsFieldEnums;
 public class FirebaseUIActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RC_SIGN_IN = 9001;
-
+    private static final String TAG = "logError";
     private FirebaseAuth mAuth;
     private Button button;
     private TextView mStatusView;
-    private TextView incidentMessage;
+
+
 
     private TextView mDetailView;
     private TextView noMission;
 
 
 
-           @Override
+    @Override
           protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_firebase_ui);
         button = findViewById(R.id.incident_button);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        incidentMessage = findViewById(R.id.titleText);
+
         mStatusView = findViewById(R.id.status);
         mDetailView = findViewById(R.id.detail);
+
 
         findViewById(R.id.signInButton).setOnClickListener(this);
         findViewById(R.id.signOutButton).setOnClickListener(this);
@@ -74,6 +83,7 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
     public void openMainActivity(){
 Intent intent =new Intent(this, MainActivity.class);
 startActivity(intent);
+
 
     };
 
@@ -91,7 +101,11 @@ startActivity(intent);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 // Sign in succeeded
+
+
                 updateUI(mAuth.getCurrentUser());
+
+
             } else {
                 // Sign in failed
                 Toast.makeText(this, "Sign In Failed", Toast.LENGTH_SHORT).show();
@@ -113,12 +127,48 @@ startActivity(intent);
         startActivityForResult(intent, RC_SIGN_IN);
     }
 
+
+    private class FindIp extends AsyncTask <URL,Void, Void> {
+
+
+                String ip;
+
+
+        @Override
+        protected Void doInBackground(URL... urls) {
+
+            try {
+                URL whatismyip= new URL ("https://checkip.amazonaws.com");
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                        whatismyip.openStream()));
+
+                ip = in.readLine();
+
+                Log.i(TAG, "EXT IP: " + ip);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+                }
+
+
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            // Signed in
+
+            new FindIp().execute();
+
+          // Toast.makeText(this, x, Toast.LENGTH_LONG);
+       //     Log.i("public ip", x);
+
+
             mStatusView.setText(getString(R.string.firebaseui_status_fmt, user.getEmail()));
             mDetailView.setText(getString(R.string.id_fmt, user.getUid()));
+
             FirebaseFirestore db = FirebaseFirestore.getInstance();
+
             Query myIncident = db.collection("incidentscollection").whereEqualTo("incidentTechEmailField", user.getEmail());
           myIncident.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
               private static final String TAG ="tech incident docs" ;
@@ -131,7 +181,8 @@ startActivity(intent);
                           document.getData();
                           if (document.getData().isEmpty()) {
                               findViewById(R.id.incident_button).setVisibility(View.GONE);
-                              incidentMessage.setText("Yet NO missions for you");
+
+
 
                           } else {
                               findViewById(R.id.incident_button).setVisibility(View.VISIBLE);
@@ -141,6 +192,10 @@ startActivity(intent);
                   }
               }
           });
+
+
+                 mStatusView.setText(getString(R.string.firebaseui_status_fmt, user.getEmail()));
+                 mDetailView.setText(getString(R.string.id_fmt, user.getUid()));
 
             findViewById(R.id.signInButton).setVisibility(View.GONE);
             findViewById(R.id.signOutButton).setVisibility(View.VISIBLE);
