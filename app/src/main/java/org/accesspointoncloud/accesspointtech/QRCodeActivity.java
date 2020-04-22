@@ -137,13 +137,13 @@ public class QRCodeActivity extends AppCompatActivity {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = null;
         try {
-            bitMatrix = qrCodeWriter.encode(editText.getText().toString(), BarcodeFormat.QR_CODE, 120, 120);
+            bitMatrix = qrCodeWriter.encode(editText.getText().toString(), BarcodeFormat.QR_CODE, 150, 150);
         } catch (WriterException e) {
             e.printStackTrace();
         }
-        Bitmap bitmap = Bitmap.createBitmap(120,120, Bitmap.Config.RGB_565);
-        for (int x=0;x<120;x++) {
-            for (int y = 0; y < 120; y++) {
+        Bitmap bitmap = Bitmap.createBitmap(150,150, Bitmap.Config.RGB_565);
+        for (int x = 0; x < 150; x++) {
+            for (int y = 0; y < 150; y++) {
                 bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
             }
         }

@@ -23,7 +23,7 @@
     <EditText
         android:id="@+id/confCodeEditText"
         android:layout_width="184dp"
-        android:layout_height="39dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="53dp"
@@ -51,16 +51,16 @@
 
     <ImageView
         android:id="@+id/imageQRView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="144dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="145dp"
         android:layout_marginEnd="147dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="16dp"
         android:contentDescription="@string/todo"
         android:src="?attr/actionBarDivider"
         app:layout_constraintBottom_toTopOf="@+id/divider2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
@@ -68,21 +68,22 @@
     <TextView
         android:id="@+id/qrConfCodeText"
         android:layout_width="170dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="92dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="16dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/dbCodeText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.344"
+        app:layout_constraintHorizontal_bias="0.354"
         app:layout_constraintStart_toStartOf="parent"
+        tools:text="incident confirmation code from camera"
         tools:visibility="visible" />
 
     <Button
         android:id="@+id/checkButton"
         android:layout_width="106dp"
         android:layout_height="65dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="#FA0606"
         android:onClick="checkDbButton"
         android:text="@string/checkDb"
@@ -90,35 +91,55 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.976"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/qrConfCodeText"
         app:layout_constraintTop_toBottomOf="@+id/camerapreview"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.952" />
 
     <SurfaceView
         android:id="@+id/camerapreview"
-        android:layout_width="244dp"
-        android:layout_height="193dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="320dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/dbCodeText"
-        android:layout_width="168dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="145dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="61dp"
-        android:layout_marginBottom="48dp"
+        android:layout_width="170dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/checkButton"
-        app:layout_constraintHorizontal_bias="0.568"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qrConfCodeText"
-        app:layout_constraintVertical_bias="0.173" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.351"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/dbConfLabel"
+        android:layout_width="56dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/db_conf"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dbCodeText"
+        app:layout_constraintHorizontal_bias="0.592"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/QRConfLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/qr_conf"
+        app:layout_constraintBottom_toTopOf="@+id/dbConfLabel"
+        app:layout_constraintEnd_toStartOf="@+id/qrConfCodeText"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
