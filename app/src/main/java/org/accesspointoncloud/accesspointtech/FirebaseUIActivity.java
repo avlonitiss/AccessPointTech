@@ -1,7 +1,10 @@
 package org.accesspointoncloud.accesspointtech;
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -13,8 +16,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,19 +60,17 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
     private Button button;
     private TextView mStatusView;
 
-
-
     private TextView mDetailView;
-    private TextView noMission;
-    private Request ipRequest;
-
-
 
     @Override
           protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+        //policy for web service acceptance
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
 
         setContentView(R.layout.activity_firebase_ui);
         button = findViewById(R.id.incident_button);

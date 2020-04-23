@@ -32,6 +32,7 @@
     <string name="go_to_your_mission">Go to your mission</string>
     <string name="qr_conf">QR Conf</string>
     <string name="db_conf">db Conf</string>
+    <string name="title_activity_access_maps">Map</string>
 
 
 </resources>

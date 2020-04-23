@@ -6,8 +6,6 @@ android {
     buildToolsVersion "29.0.2"
 
 
-
-
     defaultConfig {
         applicationId "org.accesspointoncloud.accesspointtech"
         minSdkVersion 29
@@ -24,7 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 
 
 }
@@ -56,8 +53,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
     implementation 'com.google.zxing:core:3.2.1'
-  //   implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
-  //  implementation 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
+    //   implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    //  implementation 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
 //    implementation name:'maps-sdk-3.0.0-beta', ext:'aar'
     //implementation name:'places-maps-sdk-3.0.0-beta', ext:'aar'
 

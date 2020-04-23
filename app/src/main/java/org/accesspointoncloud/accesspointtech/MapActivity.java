@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -44,6 +45,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     LocationManager locationManager;
     LocationListener locationListener;
 
+
+
+
     public void centreMapOnLocation(Location location, String title){
 
         LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
@@ -76,13 +80,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        // my_child_toolbar is defined in the layout file
 
-
-        // Get a support ActionBar corresponding to this toolbar
-
-
-        // Enable the Up button
 
     }
 
@@ -96,6 +94,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         FirebaseAuth mAuth;
@@ -134,42 +133,26 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
 
        // if (intent.getIntExtra("Place Number",0) == 0 ){
+   //     locationManager = (LocationManager)org.accesspointoncloud.accesspointtech.MapActivity.this.getSystemService(Context.LOCATION_SERVICE);
 
-            // Zoom into users location
 
-            locationManager = (LocationManager)org.accesspointoncloud.accesspointtech.MapActivity.this.getSystemService(Context.LOCATION_SERVICE);
-            locationListener = new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-                    centreMapOnLocation(location,"Είσαι εδώ");
-                }
+        // Zoom into users location
 
-                @Override
-                public void onStatusChanged(String s, int i, Bundle bundle) {
 
-                }
+       Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+         assert lastKnownLocation != null;
+           if (lastKnownLocation != null){centreMapOnLocation(lastKnownLocation,"Your Location");}
 
-                @Override
-                public void onProviderEnabled(String s) {
+    //   if (ContextCompat.checkSelfPermission(org.accesspointoncloud.accesspointtech.MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+       //     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+        //    Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            // assert lastKnownLocation != null;
+        //    if (lastKnownLocation != null){centreMapOnLocation(lastKnownLocation,"Your Location");}
 
-                }
-
-                @Override
-                public void onProviderDisabled(String s) {
-
-                }
-            };
-
-            if (ContextCompat.checkSelfPermission(org.accesspointoncloud.accesspointtech.MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
-                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-               // assert lastKnownLocation != null;
-                if (lastKnownLocation != null){centreMapOnLocation(lastKnownLocation,"Your Location");}
-
-            } else {
-
-                ActivityCompat.requestPermissions(org.accesspointoncloud.accesspointtech.MapActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
-            }
+       // } else {
+//
+  //          ActivityCompat.requestPermissions(org.accesspointoncloud.accesspointtech.MapActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+   //     }
      //   }
 
 

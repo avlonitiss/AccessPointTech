@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openMapActivity(){
-        Intent intent = new Intent(this, MapActivity.class);
+        Intent intent = new Intent(this, AccessMapsActivity.class);
         startActivity(intent);
     }
 
