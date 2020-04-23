@@ -152,7 +152,7 @@ public class QRCodeActivity extends AppCompatActivity {
     }
 
 
-    @ServerTimestamp
+    @ServerTimestamp /*  Update cloud firestore db with new generated qr code and public ip */
     Date time;
     public void addConfToDb(final String confCode) {
         mAuth = FirebaseAuth.getInstance();
