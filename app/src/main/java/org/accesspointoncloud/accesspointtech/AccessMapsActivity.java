@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import androidx.fragment.app.FragmentActivity;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.util.Log;
 
@@ -25,6 +25,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Objects;
+
 public class AccessMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -36,7 +38,7 @@ public class AccessMapsActivity extends FragmentActivity implements OnMapReadyCa
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        Objects.requireNonNull(mapFragment).getMapAsync(this);
     }
 
 
@@ -52,7 +54,7 @@ public class AccessMapsActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        Intent intent = getIntent();
+
         createIncidentLocationFromFirestore();
 
     }
@@ -65,6 +67,7 @@ public class AccessMapsActivity extends FragmentActivity implements OnMapReadyCa
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+        assert user != null;
         Query myIncident = db.collection("incidentscollection").whereEqualTo("incidentTechEmailField", user.getEmail());
         final Marker incidentMarker = mMap.addMarker(new MarkerOptions().title("random title").position(new LatLng(initPointLat,initPointLon)));
         myIncident.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         //  findViewById(R.id.qrButton).setOnClickListener((View.OnClickListener) this);
     }
 
+    /* Read from Cloud Firesotre Database  */
     public void refineDbResults() {
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();

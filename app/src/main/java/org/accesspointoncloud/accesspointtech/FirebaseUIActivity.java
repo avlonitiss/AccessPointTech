@@ -3,9 +3,6 @@ package org.accesspointoncloud.accesspointtech;
 
 import android.Manifest;
 import android.content.Intent;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -19,11 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -31,14 +29,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 //import com.google.firebase.quickstart.auth.BuildConfig;
 //import com.google.firebase.quickstart.auth.R;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Collections;
 
-import okhttp3.Connection;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -85,15 +78,44 @@ public class FirebaseUIActivity extends AppCompatActivity implements View.OnClic
 
         findViewById(R.id.signInButton).setOnClickListener(this);
         findViewById(R.id.signOutButton).setOnClickListener(this);
+
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainActivity();
+                      openMainActivity();
             }
         });
     }
 
     public void openMainActivity(){
+
+/*  update cloud firestore with incidentGoTimeStamp */
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        Query myIncident = db.collection("incidentscollection").whereEqualTo("incidentTechEmailField", user.getEmail());
+        myIncident.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if(document.get("incidentGoTimeStampField")==null)
+
+                        {
+                            document.getReference().update("incidentGoTimeStampField", Timestamp.now());
+                        }
+                        Log.d(TAG, document.getId());
+
+                    }
+                }
+            }
+        });
+
+
 Intent intent =new Intent(this, MainActivity.class);
 startActivity(intent);
 
@@ -163,9 +185,6 @@ startActivity(intent);
         if (user != null) {
 
 
-
-
-
             mStatusView.setText(getString(R.string.firebaseui_status_fmt, user.getEmail()));
             mDetailView.setText(getString(R.string.id_fmt, user.getUid()));
 
@@ -183,9 +202,6 @@ startActivity(intent);
                           document.getData();
                           if (document.getData().isEmpty()) {
                               findViewById(R.id.incident_button).setVisibility(View.GONE);
-
-
-
                           } else {
                               findViewById(R.id.incident_button).setVisibility(View.VISIBLE);
 

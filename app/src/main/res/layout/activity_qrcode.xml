@@ -85,7 +85,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:backgroundTint="#FA0606"
-        android:onClick="checkDbButton"
+        android:onClick="updateDbButton"
         android:text="@string/checkDb"
         android:textColor="#E6DCDC"
         android:textStyle="bold"

@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Camera;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -18,7 +16,6 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,11 +55,12 @@ public class QRCodeActivity extends AppCompatActivity {
     SurfaceView surfaceView;
     CameraSource cameraSource;
     private EditText editText;
+
     private TextView confCodeText;
     private TextView dbCodeText;
     private ImageView imageView;
-    private Button gButton;
-    private Button cButton;
+
+
     private FirebaseAuth mAuth;
     BarcodeDetector barcodeDetector;
     public static final int CAMERA_FACING_BACK=1;
@@ -76,10 +74,11 @@ public class QRCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_qrcode);
         mAuth = FirebaseAuth.getInstance();
         editText = findViewById(R.id.confCodeEditText);
+
         dbCodeText = findViewById(R.id.dbCodeText);
         imageView = findViewById(R.id.imageQRView);
         surfaceView = (SurfaceView) findViewById(R.id.camerapreview);
-        confCodeText = (TextView) findViewById(R.id.qrConfCodeText);
+        confCodeText =  findViewById(R.id.qrConfCodeText);
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource = new CameraSource.Builder(this,barcodeDetector)
@@ -152,7 +151,7 @@ public class QRCodeActivity extends AppCompatActivity {
     }
 
 
-    @ServerTimestamp /*  Update cloud firestore db with new generated qr code and public ip */
+    @ServerTimestamp /* PUBLIC IP FROM REST API AND  Update User's incident mission in Cloud Firestore database with QR- Code, StartCust Timestamp  and public IP */
     Date time;
     public void addConfToDb(final String confCode) {
         mAuth = FirebaseAuth.getInstance();
@@ -168,7 +167,7 @@ public class QRCodeActivity extends AppCompatActivity {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId());
                         document.getReference().update("incidentConfCodeField", confCode);
-                        document.getReference().update("incidentCustStartTimeField", Timestamp.now());
+                        document.getReference().update("incidentStartCustTimeField", Timestamp.now());
 
                         OkHttpClient client = new OkHttpClient();
 
@@ -180,7 +179,7 @@ public class QRCodeActivity extends AppCompatActivity {
 //build the request
                         Request request = new Request.Builder().url(url).build();
 //execute
-                        try {
+                        try { /* update Cloud firestore with public ip  */
                             Response response = client.newCall(request).execute();
                             String x = response.body().string();
                             Toast.makeText(QRCodeActivity.this, "Your IP address has been recorded  "+x, Toast.LENGTH_SHORT).show();
@@ -199,37 +198,50 @@ public class QRCodeActivity extends AppCompatActivity {
 
     }
 
-    public void checkDbButton(View view) {
+    public void updateDbButton(View view) {
 
-        checkDb(editText.getText().toString());
+        updateDb(confCodeText.getText().toString());
+        Toast.makeText(this,"update db from camera with conf code: "+confCodeText.getText().toString(),Toast.LENGTH_LONG).show();
     }
 
-    public void checkDb(final String confCode) {
+    public void updateDb(final String confCode) {
         mAuth = FirebaseAuth.getInstance();
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         Query myIncident = db.collection("incidentscollection").whereEqualTo("incidentTechEmailField", user.getEmail());
+        Toast.makeText(this,"update db pressed, checking if's: "+confCode,Toast.LENGTH_LONG).show();
+
         myIncident.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             private static final String TAG ="tech incident docs" ;
 
-
-            @Override
+             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId());
+
+                        //if no conf code exists in incident database
                         if(document.get("incidentConfCodeField").toString().isEmpty()){
-                           Toast.makeText(getApplicationContext(),"no confirmation entry in DB",Toast.LENGTH_LONG).show();
-                           return;
+                           Toast.makeText(getApplicationContext(),"no confirmation entry from Cloud",Toast.LENGTH_LONG).show();
+
                         } else {
+                            // if camera detects same qr code with db update a new Start Customer Timestamp
                             String fetchCode = document.get("incidentConfCodeField").toString();
                             if (fetchCode==confCode){
                                 Toast.makeText(getApplicationContext(),"yeah we have a match",Toast.LENGTH_LONG).show();
-                                document.getReference().update("incidentCustStartTimeField", Timestamp.now());
-                                return;
+                                document.getReference().update("incidentStartCustTimeField", Timestamp.now());
+
                             } else {
-                                Toast.makeText(getApplicationContext(),"wrong code baby",Toast.LENGTH_LONG).show();
-                                return;
+                                if(confCode!="") {
+                                    Toast.makeText(getApplicationContext(), "changing code baby updating now", Toast.LENGTH_LONG).show();
+                                    document.getReference().update("incidentStartCustTimeField", Timestamp.now());
+                                    document.getReference().update("incidentConfCodeField", confCode);
+                                }else {
+                                    Log.d( "Scan a QRcode first", "xxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx");
+                                }
+
+
+
                             }
                         }
 
